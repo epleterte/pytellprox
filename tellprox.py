@@ -54,3 +54,5 @@ class TellProx():
     if r.status_code == requests.codes.ok:
       return True
     return False
+
+# vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
