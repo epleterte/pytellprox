@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
 from distutils.core import setup
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(name='pytellprox',
-      version='0.2',
+      version='0.3',
       license='GPLv3',
       description='Python bindings for the Tellprox API',
-      long_description='Python bindings for the Tellprox API',
+      long_description=f,
       author='Christian Bryn',
       author_email='chr.bryn@gmail.com',
       url='https://github.com/epleterte/pytellprox',
