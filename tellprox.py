@@ -31,9 +31,10 @@ import requests
 DEBUG=False
 
 class TellProx():
-  def __init__(port='8080', host):
+  def __init__(protocol='http', port='8080', host):
     self.host = host
     self.port = port
+    self.protocol = protocol
 
   def toggle_device(self, id):
     isnum = id
@@ -42,7 +43,7 @@ class TellProx():
     except TypeError:
       return False
     payload = {'id': id}
-    r = requests.get('http://%s:%s/json/device/toggle?key=&id=%s' % (self.host, self.port, id))
+    r = requests.get('%s://%s:%s/json/device/toggle?key=&id=%s' % (self.protocol, self.host, self.port, id))
     if DEBUG:
       print(r.url)
     # I think the response needs parsing...but let's assume this works:
@@ -57,7 +58,7 @@ class TellProx():
     except TypeError:
       return False
     payload = {'id': id}
-    r = requests.get('http://%s:%s/json/device/turnon?key=&id=%s' % (self.host, self.port, id))
+    r = requests.get('%s://%s:%s/json/device/turnon?key=&id=%s' % (self.protocol, self.host, self.port, id))
     if DEBUG:
       print(r.url)
     # I think the response needs parsing...but let's assume this works:
@@ -72,7 +73,7 @@ class TellProx():
     except TypeError:
       return False
     payload = {'id': id}
-    r = requests.get('http://%s:%s/json/device/turnoff?key=&id=%s' % (self.host, self.port, id))
+    r = requests.get('%s://%s:%s/json/device/turnoff?key=&id=%s' % (self.protocol, self.host, self.port, id))
     if DEBUG:
       print(r.url)
     # I think the response needs parsing...but let's assume this works:
