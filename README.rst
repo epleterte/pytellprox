@@ -10,7 +10,7 @@ There is not much code, but after using this for a good while it seemed good to 
 =====
 Usage
 =====
->>
+::
 
     from tellprox import Tellprox
     tellprox_device_id=1
