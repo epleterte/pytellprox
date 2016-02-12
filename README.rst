@@ -19,4 +19,4 @@ Usage
     tellprox = TellProx(host=tellprox_host, port=tellprox_port)
     # if you need HTTPS you can pass protocol='https' as well
     tellprox.enable_device(tellprox_device_id)
-    tellprox.toggle(tellprox_device_id)
+    tellprox.toggle_device(tellprox_device_id)
