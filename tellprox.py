@@ -20,65 +20,65 @@ __author__ = "Christian Bryn"
 __copyright__ = "Copyright 2016, Christian Bryn"
 __credits__ = ["Christian Bryn"]
 __license__ = "GPLv2"
-__version__ = "0.2"
+__version__ = "0.4"
 __maintainer__ = "Christian Bryn"
 __email__ = "chr.bryn@gmail.com"
 __status__ = "Production"
 
 
 import requests
+import logging
 
 DEBUG=False
 
 class TellProx():
-  def __init__(protocol='http', port='8080', host):
+  def __init__(self, host, protocol='http', port='8080', loglevel='warning'):
     self.host = host
     self.port = port
     self.protocol = protocol
+    self.valid_actions = ['turnon', 'turnoff', 'toggle']
+
+    loglevel_numeric = getattr(logging, loglevel.upper(), None)
+    if not isinstance(loglevel_numeric, int):
+      raise ValueError('Invalid log level: %s' % loglevel)
+    logging.basicConfig(level=loglevel_numeric)
+
+  def _isnum(self, id):
+    isnum = id
+    try:
+      isnum += 1
+    except TypeError:
+      return False
+    return True
+
+  def _api_get(self, action, id, type='device'):
+    if not self._isnum(id):
+      logging.debug("Device id %s is not an integer" % id)
+      return False
+    r = requests.get('%s://%s:%s/json/%s/%s?key=&id=%s' % (self.protocol, self.host, self.port, type, action, id))
+    logging.debug("Request URL: %s" % r.url)
+    # I think the response needs parsing...but let's assume this works:
+    if r.status_code == requests.codes.ok:
+      return True
+    return False
+
 
   def toggle_device(self, id):
-    isnum = id
-    try:
-      isnum += 1
-    except TypeError:
-      return False
-    payload = {'id': id}
-    r = requests.get('%s://%s:%s/json/device/toggle?key=&id=%s' % (self.protocol, self.host, self.port, id))
-    if DEBUG:
-      print(r.url)
-    # I think the response needs parsing...but let's assume this works:
-    if r.status_code == requests.codes.ok:
+      if not self._api_get('toggle', id):
+          logging.warning("Could not toggle device %s" % id)
+          return False
       return True
-    return False
 
   def enable_device(self, id):
-    isnum = id
-    try:
-      isnum += 1
-    except TypeError:
-      return False
-    payload = {'id': id}
-    r = requests.get('%s://%s:%s/json/device/turnon?key=&id=%s' % (self.protocol, self.host, self.port, id))
-    if DEBUG:
-      print(r.url)
-    # I think the response needs parsing...but let's assume this works:
-    if r.status_code == requests.codes.ok:
-      return True
-    return False
+    if not self._api_get('turnon', id):
+        logging.warning("Could not turnon device %s" % id)
+        return False
+    return True
 
   def disable_device(self, id):
-    isnum = id
-    try:
-      isnum += 1
-    except TypeError:
-      return False
-    payload = {'id': id}
-    r = requests.get('%s://%s:%s/json/device/turnoff?key=&id=%s' % (self.protocol, self.host, self.port, id))
-    if DEBUG:
-      print(r.url)
-    # I think the response needs parsing...but let's assume this works:
-    if r.status_code == requests.codes.ok:
-      return True
-    return False
+    if not self._api_get('turnon', id):
+        logging.warning("Could not turnoff device %s" % id)
+        return False
+    return True
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
