@@ -1,13 +1,16 @@
+**********
 pytellprox
-==========
+**********
 
 This is a simple project that gives easy access to the tellprox API in Python.
 The Tellprox project, which can be used in place of Telldus Live, can be found here: https://github.com/p3tecracknell/tellprox
 
 There is not much code, but after using this for a good while it seemed good to clean up a bit and push upstream.
 
+=====
 Usage
------
+=====
+>>
 
     from tellprox import Tellprox
     tellprox_device_id=1
