@@ -7,6 +7,13 @@ The Tellprox project, which can be used in place of Telldus Live, can be found h
 
 There is not much code, but after using this for a good while it seemed good to clean up a bit and push upstream.
 
+============
+Installation
+============
+
+::
+    pip install pytellprox
+
 =====
 Usage
 =====
