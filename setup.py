@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='pytellprox',
-      version='0.4',
+      version='0.5',
       license='GPLv3',
       description='Python bindings for the Tellprox API',
       long_description=open('README.rst', 'r').read(),
