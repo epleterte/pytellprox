@@ -10,7 +10,6 @@ There is not much code, but after using this for a good while it seemed good to 
 ============
 Installation
 ============
-
 ::
     pip install pytellprox
 
@@ -25,5 +24,9 @@ Usage
     tellprox_port='8080'
     tellprox = TellProx(host=tellprox_host, port=tellprox_port)
     # if you need HTTPS you can pass protocol='https' as well
+    # enable/disable devices:
     tellprox.enable_device(tellprox_device_id)
     tellprox.toggle_device(tellprox_device_id)
+    # sensors:
+    sensors = tellprox.list_sensors()
+    sensor_data = tellprox.get_sensor(sensors[0]['id'])
